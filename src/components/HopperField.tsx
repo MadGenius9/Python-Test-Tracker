@@ -8,105 +8,44 @@ interface HopperFieldProps {
 
 export default function HopperField({ sides, selectedSilo, onSelect }: HopperFieldProps) {
   return (
-    <div className="relative overflow-hidden border border-cyan-500/30 bg-[#070b12] px-3 py-6 shadow-[0_0_40px_rgba(34,211,238,0.08)]">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.05)_1px,transparent_1px)] bg-[size:28px_28px]" />
-      <div className="relative space-y-8">
+    <div className="bg-[#121418] border border-[#2c3138] px-4 py-6">
+      <div className="space-y-8">
         {sides.map(({ sideName, silos }) => (
           <div key={sideName}>
-            <div className="mb-3 text-[11px] font-mono uppercase tracking-[0.28em] text-cyan-300">
+            <div className="mb-4 text-[11px] font-mono uppercase tracking-[0.22em] text-[#8b938c]">
               {sideName.toUpperCase().startsWith('SIDE') ? sideName.toUpperCase() : `Side ${sideName}`}
             </div>
-            <div className="flex items-end gap-4 overflow-x-auto pb-2">
+            <div className="flex items-end gap-5 overflow-x-auto pb-2">
               {silos.map((silo) => {
-                const fill = Math.max(6, Math.min(94, silo.percentFull || 0));
+                const fill = Math.max(4, Math.min(96, silo.percentFull || 0));
                 const selected = selectedSilo === silo.siloNumber;
                 return (
                   <button
                     key={silo.siloNumber}
                     type="button"
                     onClick={() => onSelect?.(silo.siloNumber)}
-                    className={`group relative shrink-0 w-[132px] border px-2 py-3 text-center transition cursor-pointer ${
-                      selected
-                        ? 'border-fuchsia-400 bg-fuchsia-500/10 shadow-[0_0_24px_rgba(217,70,239,0.35)]'
-                        : 'border-cyan-500/20 bg-black/40 hover:border-cyan-300'
-                    }`}
+                    className={`group relative shrink-0 w-[150px] text-center ${selected ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`}
                   >
-                    {/* Hover tooltip showing pounds remaining and stages left */}
-                    <div className="pointer-events-none absolute -top-11 left-1/2 -translate-x-1/2 z-30 opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 bg-[#070b12]/95 backdrop-blur-md border border-cyan-400 px-2.5 py-1 text-center whitespace-nowrap min-w-[90px] shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-                      <div className="text-[10px] font-mono font-bold text-cyan-100">
-                        {Math.round(silo.onHandLbs).toLocaleString()} lbs remaining
-                      </div>
-                      <div className="text-[9px] font-mono text-fuchsia-300">
-                        {silo.stagesLeft > 99 ? '>99' : silo.stagesLeft.toFixed(1)} stages left
-                      </div>
+                    <div className="pointer-events-none absolute -top-10 left-1/2 z-10 hidden -translate-x-1/2 whitespace-nowrap border border-[#2c3138] bg-[#0e1013] px-2 py-1 text-[10px] font-mono text-[#e7e1d6] group-hover:block">
+                      {Math.round(silo.onHandLbs).toLocaleString()} lb · {silo.stagesLeft.toFixed(1)} stages
                     </div>
-
-                    <svg viewBox="0 0 120 190" className="mx-auto h-44 w-24">
-                      {/* Top Cap */}
-                      <ellipse
-                        cx="60"
-                        cy="18"
-                        rx="34"
-                        ry="8"
-                        fill="#0e1724"
-                        stroke={selected ? '#e879f9' : '#67e8f9'}
-                        strokeWidth={selected ? 2 : 1.5}
-                      />
-                      {/* Silo Body */}
-                      <path
-                        d="M26 18 H94 V108 L76 146 H44 L26 108 Z"
-                        fill="#0b1220"
-                        stroke={selected ? '#e879f9' : '#155e75'}
-                        strokeWidth={selected ? 2.5 : 1.4}
-                      />
-                      {/* Live Sand Fill */}
-                      <clipPath id={`cyber-${silo.siloNumber}`}>
-                        <path d="M30 24 H90 V106 L74 142 H46 L30 106 Z" />
+                    <svg viewBox="0 0 140 220" className="mx-auto h-52 w-[130px]">
+                      <ellipse cx="70" cy="22" rx="42" ry="10" fill="#1c2128" stroke={selected ? '#d7c4a3' : '#3c444d'} />
+                      <rect x="28" y="22" width="84" height="112" fill="#171b21" stroke={selected ? '#d7c4a3' : '#3c444d'} />
+                      <path d="M28 134 L48 176 H92 L112 134 Z" fill="#14181e" stroke={selected ? '#d7c4a3' : '#3c444d'} />
+                      <clipPath id={`steel-${silo.siloNumber}`}>
+                        <rect x="32" y="28" width="76" height="104" />
+                        <path d="M32 132 L50 170 H90 L108 132 Z" />
                       </clipPath>
-                      <g clipPath={`url(#cyber-${silo.siloNumber})`}>
-                        <rect
-                          x="28"
-                          y={146 - fill * 1.15}
-                          width="64"
-                          height="130"
-                          fill={silo.isOutOfService ? '#334155' : selected ? '#d946ef' : '#22d3ee'}
-                          opacity="0.85"
-                        />
-                        <rect
-                          x="28"
-                          y={146 - fill * 1.15}
-                          width="64"
-                          height="8"
-                          fill={selected ? '#f5d0fe' : '#f0abfc'}
-                          opacity="0.85"
-                        />
+                      <g clipPath={`url(#steel-${silo.siloNumber})`}>
+                        <rect x="30" y={176 - fill * 1.4} width="80" height="150" fill="#c4a36a" />
+                        <rect x="30" y={176 - fill * 1.4} width="80" height="6" fill="#e6d3a8" />
                       </g>
-                      {/* Support Legs */}
-                      <path
-                        d="M36 146 L30 170 M84 146 L90 170 M30 170 H90"
-                        fill="none"
-                        stroke={selected ? '#e879f9' : '#67e8f9'}
-                        strokeWidth="2"
-                      />
-                      {/* Percent on tank */}
-                      <text
-                        x="60"
-                        y="78"
-                        textAnchor="middle"
-                        fontSize="14"
-                        fontFamily="monospace"
-                        fontWeight="bold"
-                        fill="#ecfeff"
-                      >
-                        {Math.round(fill)}%
-                      </text>
+                      <path d="M40 176 L34 204 M100 176 L106 204 M34 204 H106" fill="none" stroke="#5c656e" strokeWidth="3" />
                     </svg>
-
-                    <div className={`mt-1 text-sm font-mono ${selected ? 'text-fuchsia-300 font-bold' : 'text-cyan-100'}`}>
-                      Silo {silo.siloNumber}
-                    </div>
-                    <div className="text-xs font-mono text-fuchsia-200">{Math.round(silo.onHandLbs).toLocaleString()} lb</div>
-                    <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400">{silo.sandType || 'Empty'}</div>
+                    <div className="mt-1 text-sm text-[#e7e1d6]">Silo {silo.siloNumber}</div>
+                    <div className="font-mono text-sm text-[#d7c4a3]">{Math.round(silo.onHandLbs).toLocaleString()} lb</div>
+                    <div className="text-[10px] font-mono uppercase tracking-widest text-[#8b938c]">{silo.sandType || 'Empty'} · {Math.round(fill)}%</div>
                   </button>
                 );
               })}

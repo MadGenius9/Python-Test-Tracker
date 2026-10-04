@@ -825,16 +825,16 @@ export default function App() {
   // 7. MAIN APPLICATION UI
   return (
     <div className="min-h-screen bg-black text-[#f3efe4] font-sans">
-      <header className="border-b border-cyan-500/40 bg-[#05070c] px-4 py-3">
+      <header className="border-b border-[#2c3138] bg-[#0e1013] px-4 py-3">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <div className="font-display text-4xl leading-none tracking-wide text-cyan-200">PAD CONSOLE</div>
-            <div className="mt-1 text-[11px] font-mono uppercase tracking-[0.3em] text-fuchsia-300">Cyberpunk pad</div>
+            <div className="font-display text-3xl leading-none tracking-wide text-[#e7e1d6]">Sand pad</div>
+            <div className="mt-1 text-[11px] font-mono uppercase tracking-[0.22em] text-[#8b938c]">Live inventory</div>
           </div>
           <select
             value={currentPadId || ''}
             onChange={(e) => setCurrentPadId(e.target.value)}
-            className="bg-black border border-cyan-400 text-cyan-100 px-3 py-2 text-sm"
+            className="bg-[#0e1013] border border-[#2c3138] text-[#e7e1d6] px-3 py-2 text-sm"
           >
             {effectivePadList.map((p) => (
               <option key={p.id} value={p.id}>{p.name}</option>
@@ -852,7 +852,7 @@ export default function App() {
                   if (tab.id === 'delivery') setDeliveryInitialSilo(undefined);
                   setActiveTab(tab.id);
                 }}
-                className={`px-3 py-1 text-xs font-mono uppercase tracking-widest border ${isActive ? 'border-fuchsia-400 text-fuchsia-200' : 'border-cyan-500/30 text-cyan-200'}`}
+                className={`px-3 py-1 text-xs font-mono uppercase tracking-widest border ${isActive ? 'border-[#d7c4a3] text-[#e7e1d6]' : 'border-[#2c3138] text-[#8b938c]'}`}
               >
                 {tab.label}
               </button>
