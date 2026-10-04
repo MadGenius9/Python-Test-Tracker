@@ -277,20 +277,20 @@ export default function SiloBoard({
           if (!selected) return <aside className="text-sm text-[#9aa3ad]">No silos.</aside>;
           const fill = Math.max(0, Math.min(100, selected.percentFull || 0));
           return (
-            <aside className="bg-[#101318] border border-[#2a313b] rounded-xl p-4 sm:p-5 shadow-lg space-y-4 xl:sticky xl:top-24">
+            <aside className="border border-cyan-500/30 bg-[#070b12] p-4 sm:p-5 shadow-[0_0_40px_rgba(34,211,238,0.06)] space-y-4 xl:sticky xl:top-24">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-[11px] font-mono uppercase tracking-widest text-[#9aa3ad]">Detail</div>
-                  <h2 className="text-2xl font-bold font-display tracking-wide text-[#e8ebe6]">Silo #{selected.siloNumber}</h2>
-                  <div className="text-xs text-[#9aa3ad] mt-1">Side {selected.side || 'A'} · {selected.isOutOfService ? 'Offline' : 'Online'}</div>
+                  <div className="text-[11px] font-mono uppercase tracking-widest text-cyan-400">Detail</div>
+                  <h2 className="text-2xl font-bold font-display tracking-wide text-cyan-200">Silo #{selected.siloNumber}</h2>
+                  <div className="text-xs text-slate-400 mt-1 font-mono">Side {selected.side || 'A'} · {selected.isOutOfService ? 'Offline' : 'Online'}</div>
                 </div>
                 <button
                   type="button"
                   onClick={() => onToggleSiloMaintenance(selected.siloNumber, !selected.isOutOfService)}
-                  className={`text-[10px] uppercase font-semibold px-2 py-1 rounded border ${
+                  className={`text-[10px] uppercase font-mono tracking-wider px-2.5 py-1 border transition ${
                     selected.isOutOfService
-                      ? 'border-[#c23b32] text-[#e25a4a] bg-[#260e0c]'
-                      : 'border-[#2a313b] text-[#9aa3ad] bg-[#1b2027]'
+                      ? 'border-fuchsia-400 text-fuchsia-200 bg-fuchsia-500/10'
+                      : 'border-cyan-500/30 text-cyan-300 bg-black hover:border-cyan-400'
                   }`}
                 >
                   <Wrench className="w-3 h-3 inline mr-1" />
@@ -301,50 +301,50 @@ export default function SiloBoard({
               <button
                 type="button"
                 onClick={() => setSelectedSiloForSandChange(selected.siloNumber)}
-                className="w-full text-left bg-[#1b2027] border border-[#d4a017]/40 rounded-lg px-3 py-2"
+                className="w-full text-left bg-[#0b1220] border border-cyan-500/30 px-3 py-2 hover:border-cyan-300 transition"
               >
-                <div className="text-[10px] font-mono uppercase text-[#9aa3ad]">Mesh</div>
-                <div className="text-sm font-semibold text-[#d4a017]">{selected.sandType || 'No sand assigned'}</div>
+                <div className="text-[10px] font-mono uppercase text-cyan-400">Mesh</div>
+                <div className="text-sm font-mono font-bold text-cyan-100">{selected.sandType || 'No sand assigned'}</div>
               </button>
 
               <div>
-                <div className="text-[10px] font-mono uppercase text-[#9aa3ad]">On hand</div>
-                <div className="text-4xl font-mono font-semibold tracking-tight text-[#d4a017]">{formatLbs(selected.onHandLbs)}</div>
-                <div className="text-xs text-[#9aa3ad] font-mono">{formatTons(selected.onHandTons)}</div>
+                <div className="text-[10px] font-mono uppercase text-cyan-400">On hand</div>
+                <div className="text-4xl font-mono font-semibold tracking-tight text-fuchsia-200">{formatLbs(selected.onHandLbs)}</div>
+                <div className="text-xs text-slate-400 font-mono">{formatTons(selected.onHandTons)}</div>
               </div>
 
               <div>
-                <div className="flex items-center justify-between text-[10px] font-mono uppercase text-[#9aa3ad]">
+                <div className="flex items-center justify-between text-[10px] font-mono uppercase text-cyan-400">
                   <span>Capacity</span>
-                  <span>{fill.toFixed(1)}%</span>
+                  <span className="text-cyan-200 font-bold">{fill.toFixed(1)}%</span>
                 </div>
-                <div className="mt-1 h-2 rounded-full bg-[#0b0c0e] border border-[#2a313b] overflow-hidden">
-                  <div className="h-full bg-[#d4a017]" style={{ width: `${fill}%` }} />
+                <div className="mt-1 h-2 bg-[#0b1220] border border-cyan-500/30 overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-400 shadow-[0_0_12px_rgba(217,70,239,0.5)]" style={{ width: `${fill}%` }} />
                 </div>
-                <div className="text-[11px] text-[#9aa3ad] mt-1 font-mono">of {formatLbs(selected.maxCapacityLbs)}</div>
+                <div className="text-[11px] text-slate-400 mt-1 font-mono">of {formatLbs(selected.maxCapacityLbs)}</div>
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="bg-[#0b0c0e] border border-[#2a313b] rounded-lg px-3 py-2">
-                  <div className="text-[10px] uppercase font-mono text-[#9aa3ad]">Run order</div>
-                  <div className="font-mono text-[#e8ebe6]">{selected.runOrder ?? 'Auto'}</div>
+                <div className="bg-[#0b1220] border border-cyan-500/20 px-3 py-2">
+                  <div className="text-[10px] uppercase font-mono text-cyan-400">Run order</div>
+                  <div className="font-mono text-cyan-100 font-bold">{selected.runOrder ?? 'Auto'}</div>
                 </div>
-                <div className="bg-[#0b0c0e] border border-[#2a313b] rounded-lg px-3 py-2">
-                  <div className="text-[10px] uppercase font-mono text-[#9aa3ad]">Planned pull</div>
-                  <div className="font-mono text-[#e8ebe6]">{formatLbs(selected.plannedPullLbs)}</div>
+                <div className="bg-[#0b1220] border border-cyan-500/20 px-3 py-2">
+                  <div className="text-[10px] uppercase font-mono text-cyan-400">Planned pull</div>
+                  <div className="font-mono text-cyan-100 font-bold">{formatLbs(selected.plannedPullLbs)}</div>
                 </div>
-                <div className="bg-[#0b0c0e] border border-[#2a313b] rounded-lg px-3 py-2 col-span-2">
-                  <div className="text-[10px] uppercase font-mono text-[#9aa3ad]">Stages left in silo</div>
-                  <div className="font-mono text-[#e8ebe6]">{selected.stagesLeft.toFixed(2)}</div>
+                <div className="bg-[#0b1220] border border-cyan-500/20 px-3 py-2 col-span-2">
+                  <div className="text-[10px] uppercase font-mono text-cyan-400">Stages left in silo</div>
+                  <div className="font-mono text-fuchsia-300 font-bold">{selected.stagesLeft.toFixed(2)}</div>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 pt-2">
                 {onNavigateToDelivery && (
                   <button
                     type="button"
                     onClick={() => onNavigateToDelivery(selected.siloNumber)}
-                    className="bg-[#c23b32] hover:bg-[#e25a4a] text-[#e8ebe6] font-semibold text-sm px-3 py-2.5 rounded-lg"
+                    className="border border-fuchsia-400 bg-fuchsia-500 hover:bg-fuchsia-400 text-black font-mono font-bold text-xs uppercase tracking-widest px-3 py-2.5 shadow-[0_0_20px_rgba(217,70,239,0.35)] transition cursor-pointer"
                   >
                     Ticket entry
                   </button>
@@ -353,7 +353,7 @@ export default function SiloBoard({
                   <button
                     type="button"
                     onClick={onNavigateToRun}
-                    className="bg-[#1b2027] border border-[#2a313b] text-[#e8ebe6] text-sm px-3 py-2.5 rounded-lg"
+                    className="bg-black hover:bg-[#0b1220] text-cyan-200 hover:text-cyan-100 font-mono text-xs uppercase tracking-widest px-3 py-2 border border-cyan-500/30 transition cursor-pointer"
                   >
                     Record run
                   </button>

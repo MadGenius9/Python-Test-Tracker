@@ -954,10 +954,10 @@ export default function StagePullSheet({
 
       {/* Top Toolbar: Well/Stage Selectors & Print/Link Controls */}
       {!isPinned && (
-        <div className="no-print top-toolbar bg-[#14171c] border border-[#2a313b] rounded-xl p-3 sm:p-4 shadow-lg flex flex-wrap items-center justify-between gap-3">
+        <div className="no-print top-toolbar border border-cyan-500/30 bg-[#070b12] p-3 sm:p-4 shadow-[0_0_40px_rgba(34,211,238,0.06)] flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-3">
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#9aa3ad] tracking-wider mb-1">
+              <label className="block text-[10px] font-bold uppercase text-cyan-400 tracking-wider mb-1 font-mono">
                 SELECT WELL
               </label>
               <select
@@ -974,10 +974,10 @@ export default function StagePullSheet({
                     setStageNumber(lastR ? lastR.stageNumber + 1 : 1);
                   }
                 }}
-                className="bg-[#0b0c0e] border border-[#2a313b] rounded-lg px-3 py-1.5 text-xs sm:text-sm font-bold text-[#e8ebe6] focus:outline-none focus:border-[#8fa37a]"
+                className="bg-black border border-cyan-500/30 px-3 py-1.5 text-xs sm:text-sm font-bold text-cyan-100 focus:outline-none focus:border-cyan-300 font-mono"
               >
                 {wells.map((w) => (
-                  <option key={w.id} value={w.id}>
+                  <option key={w.id} value={w.id} className="bg-[#070b12]">
                     {w.name} ({w.plannedStages} Stages)
                   </option>
                 ))}
@@ -985,7 +985,7 @@ export default function StagePullSheet({
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#9aa3ad] tracking-wider mb-1">
+              <label className="block text-[10px] font-bold uppercase text-cyan-400 tracking-wider mb-1 font-mono">
                 STAGE NUMBER
               </label>
               <div className="flex items-center gap-2">
@@ -998,7 +998,7 @@ export default function StagePullSheet({
                     setIsManuallyOverridden(true);
                     setStageNumber(Math.max(1, parseInt(e.target.value, 10) || 1));
                   }}
-                  className="w-20 bg-[#0b0c0e] border border-[#2a313b] rounded-lg px-3 py-1.5 text-xs sm:text-sm font-mono font-bold text-[#e8ebe6] focus:outline-none focus:border-[#8fa37a]"
+                  className="w-20 bg-black border border-cyan-500/30 px-3 py-1.5 text-xs sm:text-sm font-mono font-bold text-cyan-100 focus:outline-none focus:border-cyan-300"
                 />
                 <button
                   type="button"
@@ -1012,10 +1012,10 @@ export default function StagePullSheet({
                       setStageNumber(defaultStageNumber);
                     }
                   }}
-                  className={`text-[10px] font-bold uppercase px-2.5 py-1.5 rounded-lg border transition flex items-center gap-1.5 ${
+                  className={`text-[10px] font-bold uppercase px-2.5 py-1.5 border transition flex items-center gap-1.5 font-mono ${
                     isManuallyOverridden
-                      ? 'bg-[#d4a017] hover:bg-[#d4a017]/90 text-[#0b0c0e] border-[#d4a017] shadow-sm'
-                      : 'bg-[#1b2027] hover:bg-[#2a313b] text-[#9aa3ad] hover:text-[#e8ebe6] border-[#2a313b]'
+                      ? 'bg-fuchsia-500 hover:bg-fuchsia-400 text-black border-fuchsia-400 shadow-[0_0_15px_rgba(217,70,239,0.3)]'
+                      : 'bg-black hover:bg-[#0b1220] text-cyan-300 hover:text-cyan-100 border-cyan-500/30'
                   }`}
                   title={isManuallyOverridden ? 'Reset to Auto Next Well & Stage' : 'Reset to Next Stage'}
                 >
@@ -1034,7 +1034,7 @@ export default function StagePullSheet({
               <button
                 type="button"
                 onClick={() => setIsRecordRunModalOpen(true)}
-                className="bg-[#c23b32] hover:bg-[#e25a4a] active:bg-[#a63028] text-[#e8ebe6] font-bold text-xs px-3.5 py-2 rounded-lg shadow border border-[#e25a4a]/40 transition flex items-center gap-2 uppercase tracking-wide cursor-pointer"
+                className="border border-fuchsia-400 bg-fuchsia-500 hover:bg-fuchsia-400 text-black font-mono font-bold text-xs px-3.5 py-2 shadow-[0_0_20px_rgba(217,70,239,0.35)] transition flex items-center gap-2 uppercase tracking-wider cursor-pointer"
               >
                 <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
                 <span>RECORD THIS PULL</span>
@@ -1044,7 +1044,7 @@ export default function StagePullSheet({
             <button
               type="button"
               onClick={() => window.print()}
-              className="bg-[#14171c] hover:bg-[#1b2027] text-[#8fa37a] hover:text-[#e8ebe6] border border-[#8fa37a]/60 font-bold text-xs px-3.5 py-2 rounded-lg transition flex items-center gap-2 uppercase tracking-wide cursor-pointer"
+              className="bg-black hover:bg-[#0b1220] text-cyan-300 hover:text-cyan-100 border border-cyan-500/30 font-mono font-bold text-xs px-3.5 py-2 transition flex items-center gap-2 uppercase tracking-wider cursor-pointer"
             >
               <Printer className="w-4 h-4 stroke-[2.5]" />
               <span>PRINT SHEET</span>

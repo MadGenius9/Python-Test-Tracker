@@ -434,32 +434,32 @@ export default function Dashboard({ state, onNavigateTab, onSelectPad }: Dashboa
           }}
         />
         <aside className="space-y-3">
-          <div className="rounded-xl border border-[#2a313b] bg-[#14171c] p-4">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-[#9aa3ad]">Pad on hand</div>
-            <div className="mt-1 text-3xl font-mono text-[#e8ebe6]">{(totalOnHandLbs / 1_000_000).toFixed(2)}M <span className="text-sm text-[#9aa3ad]">lbs</span></div>
+          <div className="border border-cyan-500/30 bg-[#070b12] p-4 shadow-[0_0_20px_rgba(34,211,238,0.06)]">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400">Pad on hand</div>
+            <div className="mt-1 text-3xl font-mono text-cyan-200 font-bold">{(totalOnHandLbs / 1_000_000).toFixed(2)}M <span className="text-sm font-normal text-cyan-400">lbs</span></div>
           </div>
-          <div className="rounded-xl border border-[#2a313b] bg-[#14171c] p-4">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-[#9aa3ad]">Stages left</div>
-            <div className="mt-1 text-3xl font-mono text-[#e8ebe6]">{padTotalStagesLeft} <span className="text-sm text-[#9aa3ad]">of {padTotalStagesPlanned}</span></div>
+          <div className="border border-cyan-500/30 bg-[#070b12] p-4 shadow-[0_0_20px_rgba(34,211,238,0.06)]">
+            <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400">Stages left</div>
+            <div className="mt-1 text-3xl font-mono text-fuchsia-200 font-bold">{padTotalStagesLeft} <span className="text-sm font-normal text-cyan-400">of {padTotalStagesPlanned}</span></div>
           </div>
           {padSummary.hasReorderAlert && (
-            <button type="button" onClick={() => onNavigateTab('delivery')} className="w-full rounded-xl border border-[#c23b32] bg-[#260e0c] p-4 text-left">
-              <div className="text-sm font-semibold text-[#e25a4a]">Low sand warning</div>
-              <div className="text-xs text-[#9aa3ad] mt-1">A sand type is under the reorder reserve.</div>
+            <button type="button" onClick={() => onNavigateTab('delivery')} className="w-full border border-fuchsia-400 bg-fuchsia-500/10 p-4 text-left shadow-[0_0_20px_rgba(217,70,239,0.2)]">
+              <div className="text-sm font-semibold font-mono uppercase text-fuchsia-300">Low sand warning</div>
+              <div className="text-xs text-cyan-300/80 mt-1 font-mono">A sand type is under the reorder reserve.</div>
             </button>
           )}
-          <button type="button" onClick={() => setIsRecoveryOpen(true)} className="w-full rounded-xl border border-[#2a313b] bg-[#14171c] px-4 py-2 text-xs text-[#9aa3ad]">Restore setup</button>
+          <button type="button" onClick={() => setIsRecoveryOpen(true)} className="w-full border border-cyan-500/30 bg-black hover:bg-[#0b1220] px-4 py-2 text-xs font-mono text-cyan-300 hover:text-cyan-100 transition">Restore setup</button>
         </aside>
       </div>
-      <div className="rounded-xl border border-[#2a313b] bg-[#14171c] p-4">
-        <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-[#9aa3ad]">
+      <div className="border border-cyan-500/30 bg-[#070b12] p-4 shadow-[0_0_20px_rgba(34,211,238,0.06)]">
+        <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-cyan-400">
           <span>Well progress</span>
-          <span>{padTotalStagesPumped} / {padTotalStagesPlanned} stages</span>
+          <span className="text-fuchsia-300 font-bold">{padTotalStagesPumped} / {padTotalStagesPlanned} stages</span>
         </div>
-        <div className="mt-3 h-2 rounded-full bg-[#0b0c0e] overflow-hidden">
-          <div className="h-full bg-[#c23b32]" style={{ width: `${padTotalPercentComplete}%` }} />
+        <div className="mt-3 h-2 bg-[#0b1220] border border-cyan-500/30 overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-400 shadow-[0_0_12px_rgba(217,70,239,0.5)]" style={{ width: `${padTotalPercentComplete}%` }} />
         </div>
-        <div className="mt-2 text-sm text-[#e8ebe6]">Stage {padSummary.nextStageNumber} · {padSummary.nextWellName}</div>
+        <div className="mt-2 text-sm font-mono text-cyan-100">Stage {padSummary.nextStageNumber} · {padSummary.nextWellName}</div>
       </div>
 
       {/* Well & Sand Setup Recovery Modal */}

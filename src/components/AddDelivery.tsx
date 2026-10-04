@@ -1210,21 +1210,21 @@ export default function AddDelivery({
       {/* ========================================================================= */}
       <div className="hidden md:block space-y-6">
         {/* Top Banner with Done & Scan Buttons */}
-        <div className="bg-[#14171c] border border-[#2a313b] rounded-2xl p-5 sm:p-6 text-[#e8ebe6] shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="border border-cyan-500/30 bg-[#070b12] p-5 sm:p-6 text-cyan-100 shadow-[0_0_40px_rgba(34,211,238,0.06)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="bg-[#1b2027] text-[#e8ebe6] p-3 rounded-xl border border-[#2a313b] shrink-0 shadow-lg">
+            <div className="bg-[#0b1220] text-cyan-300 p-3 border border-cyan-500/30 shrink-0">
               <Truck className="w-6 h-6 stroke-[2]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-bold uppercase tracking-wide font-display text-[#e8ebe6]">
+                <h2 className="text-2xl font-bold uppercase tracking-wide font-display text-cyan-200">
                   TICKET ENTRY
                 </h2>
-                <span className="bg-[#1b2027] text-[#9aa3ad] border border-[#2a313b] text-[10px] font-semibold uppercase px-2 py-0.5 rounded-md">
+                <span className="bg-black text-cyan-400 border border-cyan-500/30 text-[10px] font-semibold uppercase px-2 py-0.5 font-mono">
                   MULTI-LOAD
                 </span>
               </div>
-              <p className="text-xs text-[#9aa3ad] font-normal mt-0.5">
+              <p className="text-xs text-slate-400 font-mono mt-0.5">
                 Enter tickets consecutively — stay on screen until finished.
               </p>
             </div>
@@ -1235,10 +1235,10 @@ export default function AddDelivery({
             <button
               type="button"
               onClick={() => setIsScannerOpen(true)}
-              className="flex-1 sm:flex-none bg-[#c23b32] hover:bg-[#e25a4a] active:bg-[#a63028] text-[#e8ebe6] font-semibold text-xs sm:text-sm px-4 py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 uppercase tracking-wider transition active:scale-95 cursor-pointer min-h-[44px]"
+              className="flex-1 sm:flex-none border border-fuchsia-400 bg-fuchsia-500 hover:bg-fuchsia-400 text-black font-mono font-bold text-xs sm:text-sm px-4 py-3 shadow-[0_0_20px_rgba(217,70,239,0.35)] flex items-center justify-center gap-2 uppercase tracking-wider transition cursor-pointer min-h-[44px]"
             >
               <QrCode className="w-4 h-4 stroke-[2]" />
-              <span className="font-display tracking-wider">SCAN TICKET</span>
+              <span className="font-mono tracking-wider">SCAN TICKET</span>
             </button>
 
             {/* DONE Button - Deliberate return to board */}
@@ -1246,10 +1246,10 @@ export default function AddDelivery({
               <button
                 type="button"
                 onClick={onDone || onCancel}
-                className="flex-1 sm:flex-none bg-[#1b2027] hover:bg-[#2a313b] text-[#e8ebe6] font-semibold text-xs sm:text-sm px-4 py-3 rounded-xl shadow border border-[#2a313b] flex items-center justify-center gap-2 uppercase tracking-wider transition active:scale-95 cursor-pointer min-h-[44px]"
+                className="flex-1 sm:flex-none bg-black hover:bg-[#0b1220] text-cyan-200 border border-cyan-500/30 font-mono font-bold text-xs sm:text-sm px-4 py-3 shadow flex items-center justify-center gap-2 uppercase tracking-wider transition cursor-pointer min-h-[44px]"
                 title="Finish ticket entry stack and return to Silo Board"
               >
-                <Check className="w-4 h-4 text-[#8fa37a] stroke-[2]" />
+                <Check className="w-4 h-4 text-cyan-300 stroke-[2.5]" />
                 <span>DONE</span>
               </button>
             )}

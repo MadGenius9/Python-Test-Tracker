@@ -212,15 +212,15 @@ export default function RecordRun({
   return (
     <div className="space-y-4">
       {errorMessage && (
-        <div className="bg-[#1a0c0b] border border-[#e25a4a] text-[#f3efe4] px-4 py-3 flex items-center justify-between gap-3 text-sm font-mono">
+        <div className="bg-[#1a0a14] border border-fuchsia-400 text-fuchsia-100 px-4 py-3 flex items-center justify-between gap-3 text-sm font-mono shadow-[0_0_20px_rgba(217,70,239,0.25)]">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-[#e25a4a] shrink-0" />
+            <AlertTriangle className="w-4 h-4 text-fuchsia-400 shrink-0" />
             <span>{errorMessage}</span>
           </div>
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="text-[#9aa3ad] hover:text-[#f3efe4]"
+            className="text-cyan-400 hover:text-cyan-200"
           >
             <X className="w-4 h-4" />
           </button>
@@ -238,19 +238,19 @@ export default function RecordRun({
           />
         </div>
 
-        {/* Right Column: Existing Run Form */}
-        <aside className="border border-[#3a2a16] bg-[#0c0c0c] p-4 sm:p-5 space-y-4 xl:sticky xl:top-4 min-w-0">
+        {/* Right Column: Cyberpunk Run Form */}
+        <aside className="border border-cyan-500/30 bg-[#070b12] p-4 sm:p-5 space-y-4 xl:sticky xl:top-4 min-w-0 shadow-[0_0_40px_rgba(34,211,238,0.06)]">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex items-start justify-between gap-3 border-b border-[#2a2418] pb-3">
+            <div className="flex items-start justify-between gap-3 border-b border-cyan-500/20 pb-3">
               <div>
-                <div className="font-display text-2xl tracking-wide text-[#f0d48a]">RECORD RUN</div>
-                <div className="mt-0.5 text-xs font-mono uppercase tracking-widest text-[#d4a017]">
+                <div className="font-display text-2xl tracking-wide text-cyan-200">RECORD RUN</div>
+                <div className="mt-0.5 text-xs font-mono uppercase tracking-widest text-fuchsia-300">
                   {selectedWellObj.name} · Stage {stageNumber}
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-[#9aa3ad]">Pulls active</div>
-                <div className="text-sm font-mono font-bold text-[#f0d48a]">
+                <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400">Pulls active</div>
+                <div className="text-sm font-mono font-bold text-fuchsia-200">
                   {includedSiloNumbers.length} / {siloDerivedStates.length}
                 </div>
               </div>
@@ -258,36 +258,36 @@ export default function RecordRun({
 
             {/* Well, Stage, and Date Controls */}
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-[#050505] border border-[#2a2418] p-2">
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-[#9aa3ad] mb-1">Target well</label>
+              <div className="bg-[#0b1220] border border-cyan-500/20 p-2.5">
+                <label className="block text-[10px] font-mono uppercase tracking-wider text-cyan-400 mb-1">Target well</label>
                 <select
                   value={wellId}
                   onChange={(e) => setWellId(e.target.value)}
-                  className="w-full bg-black border border-[#3a2a16] px-2 py-1 text-xs text-[#f3efe4] focus:outline-none focus:border-[#d4a017]"
+                  className="w-full bg-black border border-cyan-500/30 px-2.5 py-1.5 text-xs text-cyan-100 focus:outline-none focus:border-cyan-300"
                 >
                   {state.config.wells.map((w) => (
-                    <option key={w.id} value={w.id} className="bg-black">
+                    <option key={w.id} value={w.id} className="bg-[#070b12]">
                       {w.name}
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="bg-[#050505] border border-[#2a2418] p-2">
-                <label className="block text-[10px] font-mono uppercase tracking-wider text-[#9aa3ad] mb-1">Stage #</label>
+              <div className="bg-[#0b1220] border border-cyan-500/20 p-2.5">
+                <label className="block text-[10px] font-mono uppercase tracking-wider text-cyan-400 mb-1">Stage #</label>
                 <input
                   type="number"
                   min="1"
                   max="200"
                   value={stageNumber}
                   onChange={(e) => setStageNumber(parseInt(e.target.value, 10) || 1)}
-                  className="w-full bg-black border border-[#3a2a16] px-2 py-1 text-xs font-mono text-[#f3efe4] focus:outline-none focus:border-[#d4a017]"
+                  className="w-full bg-black border border-cyan-500/30 px-2.5 py-1.5 text-xs font-mono text-cyan-100 focus:outline-none focus:border-cyan-300"
                 />
               </div>
 
-              <div className="bg-[#050505] border border-[#2a2418] p-2 col-span-2">
+              <div className="bg-[#0b1220] border border-cyan-500/20 p-2.5 col-span-2">
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-[#9aa3ad]">Date</label>
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-cyan-400">Date</label>
                   <button
                     type="button"
                     onClick={() => {
@@ -301,7 +301,7 @@ export default function RecordRun({
                       });
                       setCustomPulls(pulls);
                     }}
-                    className="text-[10px] font-mono uppercase tracking-wider text-[#d4a017] hover:text-[#f0d48a] flex items-center gap-1"
+                    className="text-[10px] font-mono uppercase tracking-wider text-fuchsia-300 hover:text-fuchsia-200 flex items-center gap-1 transition"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Reset to planned</span>
@@ -311,19 +311,19 @@ export default function RecordRun({
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-black border border-[#3a2a16] px-2 py-1 text-xs font-mono text-[#f3efe4] focus:outline-none focus:border-[#d4a017]"
+                  className="w-full bg-black border border-cyan-500/30 px-2.5 py-1.5 text-xs font-mono text-cyan-100 focus:outline-none focus:border-cyan-300"
                 />
               </div>
             </div>
 
             {/* Selected Silo Pull Entries */}
             <div className="space-y-2">
-              <div className="text-[10px] font-mono uppercase tracking-widest text-[#d4a017]">
+              <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-300">
                 Silo pull allocations
               </div>
 
               {includedSiloNumbers.length === 0 ? (
-                <div className="bg-[#050505] border border-[#2a2418] p-4 text-center text-xs font-mono text-[#9aa3ad]">
+                <div className="bg-[#0b1220] border border-cyan-500/20 p-4 text-center text-xs font-mono text-cyan-400/80">
                   No silos selected. Click any tank on the pad map to add it to this run.
                 </div>
               ) : (
@@ -341,16 +341,16 @@ export default function RecordRun({
                         }}
                         className={`border p-2.5 transition cursor-pointer ${
                           isSelected
-                            ? 'border-[#e25a4a] bg-[#1a0c0b]'
-                            : 'border-[#2a2418] bg-[#050505] hover:border-[#3a2a16]'
+                            ? 'border-fuchsia-400 bg-fuchsia-500/10 shadow-[0_0_20px_rgba(217,70,239,0.25)]'
+                            : 'border-cyan-500/20 bg-[#0b1220] hover:border-cyan-400/50'
                         }`}
                       >
                         <div className="flex items-center justify-between text-xs mb-1.5">
                           <div className="flex items-center gap-2">
-                            <span className={`font-mono font-bold ${isSelected ? 'text-[#e25a4a]' : 'text-[#f3efe4]'}`}>
+                            <span className={`font-mono font-bold ${isSelected ? 'text-fuchsia-300' : 'text-cyan-100'}`}>
                               Silo #{siloNum}
                             </span>
-                            <span className="text-[10px] font-mono text-[#d4a017] uppercase tracking-wider">
+                            <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider">
                               {silo?.sandType || 'Empty'}
                             </span>
                           </div>
@@ -360,7 +360,7 @@ export default function RecordRun({
                               e.stopPropagation();
                               handleToggleSilo(siloNum);
                             }}
-                            className="text-[#9aa3ad] hover:text-[#e25a4a] text-[10px] uppercase font-mono tracking-wider"
+                            className="text-slate-400 hover:text-fuchsia-400 text-[10px] uppercase font-mono tracking-wider transition"
                           >
                             Remove
                           </button>
@@ -374,9 +374,9 @@ export default function RecordRun({
                               placeholder="0"
                               onClick={(e) => e.stopPropagation()}
                               onChange={(e) => handlePullAmountChange(siloNum, e.target.value)}
-                              className="w-full bg-black border border-[#3a2a16] px-2.5 py-1.5 text-sm font-mono font-bold text-[#f3efe4] focus:outline-none focus:border-[#d4a017]"
+                              className="w-full bg-black border border-cyan-500/30 px-2.5 py-1.5 text-sm font-mono font-bold text-cyan-100 focus:outline-none focus:border-fuchsia-400"
                             />
-                            <span className="absolute right-2.5 top-2 text-[10px] font-mono text-[#9aa3ad]">
+                            <span className="absolute right-2.5 top-2 text-[10px] font-mono text-cyan-500">
                               lbs
                             </span>
                           </div>
@@ -391,7 +391,7 @@ export default function RecordRun({
                                   [siloNum]: silo.plannedPullLbs,
                                 }));
                               }}
-                              className="px-2 py-1.5 bg-[#141414] hover:bg-[#202020] border border-[#3a2a16] text-[10px] font-mono text-[#d4a017] hover:text-[#f3efe4]"
+                              className="px-2.5 py-1.5 bg-[#0e1724] hover:bg-[#152336] border border-cyan-500/30 text-[10px] font-mono text-cyan-300 hover:text-cyan-100 transition"
                               title={`Set to planned: ${formatLbs(silo.plannedPullLbs)}`}
                             >
                               Planned
@@ -399,9 +399,9 @@ export default function RecordRun({
                           ) : null}
                         </div>
 
-                        <div className="flex items-center justify-between text-[10px] text-[#9aa3ad] font-mono mt-1">
+                        <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono mt-1">
                           <span>On hand: {Math.round(silo?.onHandLbs || 0).toLocaleString()} lbs</span>
-                          {silo?.plannedPullLbs ? <span>Plan: {formatLbs(silo.plannedPullLbs)}</span> : null}
+                          {silo?.plannedPullLbs ? <span className="text-cyan-400">Plan: {formatLbs(silo.plannedPullLbs)}</span> : null}
                         </div>
                       </div>
                     );
@@ -411,24 +411,24 @@ export default function RecordRun({
             </div>
 
             {/* Design Variance Summary */}
-            <div className="bg-[#050505] border border-[#2a2418] p-3 space-y-1.5">
+            <div className="bg-[#0b1220] border border-cyan-500/20 p-3 space-y-1.5">
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-[#9aa3ad] uppercase text-[10px] tracking-wider">Total actual pull</span>
-                <span className="font-bold text-[#f0d48a]">{formatLbs(totalActualPulledLbs)}</span>
+                <span className="text-cyan-400 uppercase text-[10px] tracking-wider">Total actual pull</span>
+                <span className="font-bold text-cyan-100">{formatLbs(totalActualPulledLbs)}</span>
               </div>
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-[#9aa3ad] uppercase text-[10px] tracking-wider">Stage design target</span>
-                <span className="text-[#9aa3ad]">{formatLbs(stageDesignTotalLbs)}</span>
+                <span className="text-slate-400 uppercase text-[10px] tracking-wider">Stage design target</span>
+                <span className="text-slate-400">{formatLbs(stageDesignTotalLbs)}</span>
               </div>
-              <div className="flex items-center justify-between text-xs font-mono pt-1 border-t border-[#2a2418]">
-                <span className="text-[#9aa3ad] uppercase text-[10px] tracking-wider">Variance</span>
+              <div className="flex items-center justify-between text-xs font-mono pt-1 border-t border-cyan-500/20">
+                <span className="text-cyan-400 uppercase text-[10px] tracking-wider">Variance</span>
                 <span
                   className={`font-bold ${
                     Math.abs(variancePercentage) <= 5
-                      ? 'text-[#8fa37a]'
+                      ? 'text-emerald-400'
                       : totalVarianceLbs > 0
-                      ? 'text-[#d4a017]'
-                      : 'text-[#e25a4a]'
+                      ? 'text-cyan-300'
+                      : 'text-fuchsia-300'
                   }`}
                 >
                   {totalVarianceLbs >= 0 ? `+${formatLbs(totalVarianceLbs)}` : formatLbs(totalVarianceLbs)}{' '}
@@ -442,7 +442,7 @@ export default function RecordRun({
               <button
                 type="submit"
                 disabled={isSubmitting || includedSiloNumbers.length === 0}
-                className="w-full border border-[#e25a4a] bg-[#e25a4a] hover:bg-[#c23b32] disabled:opacity-40 text-black font-mono font-bold text-xs uppercase tracking-widest px-3 py-2.5 transition flex items-center justify-center gap-1.5 cursor-pointer disabled:cursor-not-allowed"
+                className="w-full border border-fuchsia-400 bg-fuchsia-500 hover:bg-fuchsia-400 disabled:opacity-40 text-black font-mono font-bold text-xs uppercase tracking-widest px-3 py-2.5 shadow-[0_0_24px_rgba(217,70,239,0.35)] transition flex items-center justify-center gap-1.5 cursor-pointer disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <span>Recording run...</span>
@@ -458,7 +458,7 @@ export default function RecordRun({
                 <button
                   type="button"
                   onClick={onCancel}
-                  className="w-full bg-black hover:bg-[#141414] text-[#9aa3ad] hover:text-[#f3efe4] font-mono text-xs uppercase tracking-widest px-3 py-2 border border-[#3a2a16] transition"
+                  className="w-full bg-black hover:bg-[#0b1220] text-cyan-300 hover:text-cyan-100 font-mono text-xs uppercase tracking-widest px-3 py-2 border border-cyan-500/30 transition"
                 >
                   Cancel
                 </button>
