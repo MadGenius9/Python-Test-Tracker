@@ -823,8 +823,45 @@ export default function App() {
 
   // 7. MAIN APPLICATION UI
   return (
-    <div className="min-h-screen bg-[#0b0c0e] text-[#e8ebe6] font-sans selection:bg-[#c23b32] selection:text-[#e8ebe6]">
-      {/* Firebase / Database Warning Banner */}
+    <div className="min-h-screen bg-[#07080a] text-[#e8ebe6] font-sans flex">
+      <aside className="hidden md:flex w-52 shrink-0 flex-col border-r border-[#2a313b] bg-[#0c0e12] px-3 py-4">
+        <div className="px-2">
+          <div className="font-display text-2xl tracking-wide text-[#e8ebe6]">PYTHON</div>
+          <div className="text-[11px] font-mono uppercase tracking-widest text-[#d4a017]">Sand tracker</div>
+        </div>
+        <div className="mt-6 text-[10px] font-mono uppercase tracking-widest text-[#9aa3ad] px-2">Pad</div>
+        <select
+          value={currentPadId || ''}
+          onChange={(e) => setCurrentPadId(e.target.value)}
+          className="mt-1 w-full bg-[#14171c] border border-[#2a313b] text-[#e8ebe6] rounded px-2 py-1.5 text-xs"
+        >
+          {effectivePadList.map((p) => (
+            <option key={p.id} value={p.id}>{p.name}</option>
+          ))}
+        </select>
+        <nav className="mt-6 flex flex-col gap-1">
+          {primaryTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => {
+                  if (tab.id === 'delivery') setDeliveryInitialSilo(undefined);
+                  setActiveTab(tab.id);
+                }}
+                className={`flex items-center gap-2 rounded px-2 py-2 text-left text-sm ${isActive ? 'bg-[#c23b32] text-white' : 'text-[#9aa3ad] hover:bg-[#14171c] hover:text-[#e8ebe6]'}`}
+              >
+                <Icon className="w-4 h-4" />
+                {tab.label}
+              </button>
+            );
+          })}
+        </nav>
+        <div className="mt-auto pt-4 text-[10px] font-mono uppercase tracking-widest text-[#8fa37a] px-2">Live sync</div>
+      </aside>
+      <div className="min-w-0 flex-1">
       {firebaseError && (
         <div className="bg-[#260e0c] text-[#e25a4a] font-medium px-4 py-2.5 text-center border-b border-[#c23b32] shadow-lg flex items-center justify-center gap-2.5 text-xs sm:text-sm z-50 relative">
           <AlertTriangle className="w-4 h-4 shrink-0 text-[#e25a4a]" />
@@ -839,105 +876,6 @@ export default function App() {
           <span>{toastMessage}</span>
         </div>
       )}
-
-      {/* Main Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#0b0c0e]/95 backdrop-blur-md border-b border-[#2a313b]">
-        <div className="max-w-[1400px] mx-auto px-3 sm:px-5 py-3 flex flex-wrap items-center gap-4">
-          <div className="leading-none">
-            <div className="text-xl sm:text-2xl font-bold tracking-wide text-[#e8ebe6] font-display">PYTHON <span className="text-[#9aa3ad] font-medium">Sand Tracker</span></div>
-            <div className="mt-1 flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-[#8fa37a]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#8fa37a]"></span>
-              Live sync
-            </div>
-          </div>
-          <div className="hidden md:block h-8 w-px bg-[#2a313b]" />
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#9aa3ad]">
-            Customer <span className="block text-sm text-[#e8ebe6] tracking-wide">{state.config.wells?.[0]?.customerName || state.config.customerName || '—'}</span>
-          </div>
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#9aa3ad]">
-            Pad
-            <select
-              value={currentPadId || ''}
-              onChange={(e) => setCurrentPadId(e.target.value)}
-              className="block bg-transparent text-sm text-[#e8ebe6] font-display tracking-wide focus:outline-none cursor-pointer"
-            >
-              {effectivePadList.map((p) => (
-                <option key={p.id} value={p.id} className="bg-[#14171c]">{p.name}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="border-t border-[#2a313b] px-2 sm:px-5 py-2">
-          <nav className="max-w-[1400px] mx-auto flex items-center gap-2">
-            <div className="flex items-center gap-2 overflow-x-auto">
-              {primaryTabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => {
-                      if (tab.id === 'delivery') setDeliveryInitialSilo(undefined);
-                      setActiveTab(tab.id);
-                      setIsMoreOpen(false);
-                    }}
-                    className={`px-3 py-1.5 rounded-md text-xs font-medium border flex items-center gap-1.5 ${
-                      isActive
-                        ? 'bg-[#c23b32] border-[#c23b32] text-[#e8ebe6]'
-                        : 'bg-transparent border-[#2a313b] text-[#9aa3ad] hover:text-[#e8ebe6]'
-                    }`}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
-            <div className="relative ml-auto" ref={moreMenuRef}>
-              <button
-                type="button"
-                onClick={() => setIsMoreOpen((prev) => !prev)}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium border ${
-                  isMoreActive ? 'border-[#c23b32] text-[#e25a4a]' : 'border-[#2a313b] text-[#9aa3ad]'
-                }`}
-              >
-                {isMoreActive && activeMoreTab ? activeMoreTab.label : 'More'}
-              </button>
-
-              {isMoreOpen && (
-                <div className="absolute right-0 top-full mt-1.5 w-56 bg-[#14171c] border border-[#2a313b] rounded-xl shadow-2xl p-1.5 z-50 divide-y divide-[#2a313b]/60">
-                  <div className="py-1">
-                    {moreTabs.map((tab) => {
-                      const Icon = tab.icon;
-                      const isActive = activeTab === tab.id;
-                      return (
-                        <button
-                          key={tab.id}
-                          type="button"
-                          onClick={() => {
-                            setActiveTab(tab.id);
-                            setIsMoreOpen(false);
-                            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-                          }}
-                          className={`w-full text-left px-3 py-2 rounded-lg text-xs sm:text-sm font-medium flex items-center gap-2.5 transition ${
-                            isActive
-                              ? 'bg-[#c23b32] text-[#e8ebe6] font-semibold'
-                              : 'text-[#9aa3ad] hover:text-[#e8ebe6] hover:bg-[#1b2027]'
-                          }`}
-                        >
-                          <Icon className="w-4 h-4 shrink-0" />
-                          <span>{tab.label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          </nav>
-        </div>
-      </header>
 
       {/* Main View Container */}
       <main className="max-w-[1400px] mx-auto px-2 sm:px-5 py-4">
@@ -1099,6 +1037,7 @@ export default function App() {
           </div>
         )}
       </main>
+      </div>
     </div>
   );
 }
