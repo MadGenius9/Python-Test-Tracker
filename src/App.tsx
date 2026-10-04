@@ -897,6 +897,8 @@ export default function App() {
         ) : activeTab === 'run' ? (
           <RecordRun
             state={state}
+            initialSiloNumber={deliveryInitialSilo}
+            onSelectSilo={(siloNum) => setDeliveryInitialSilo(siloNum)}
             onRecordRun={handleRecordRun}
             onCancel={() => setActiveTab('board')}
           />
