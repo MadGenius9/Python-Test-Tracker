@@ -34,7 +34,7 @@ import StageReview from './components/StageReview';
 import { Reconciliation } from './components/Reconciliation';
 import QuickEntry from './components/QuickEntry';
 import { onFirebaseError, waitForFirebaseAuth, resetAuthReadyPromise } from './lib/firebase';
-import { getNextWellAndStage, isStageComplete, getSiloDerivedStates } from './lib/sandRules';
+import { getNextWellAndStage, isStageComplete, getSiloDerivedStates, getPadSummary } from './lib/sandRules';
 import HopperField from './components/HopperField';
 import {
   addDeliveryTicket,
@@ -822,27 +822,58 @@ export default function App() {
   const activeMoreTab = moreTabs.find((t) => t.id === activeTab);
   const isMoreActive = Boolean(activeMoreTab);
 
+  const padSummary = getPadSummary(state);
+
   // 7. MAIN APPLICATION UI
   return (
-    <div className="min-h-screen bg-black text-[#f3efe4] font-sans">
-      <header className="border-b border-[#2c3138] bg-[#0e1013] px-4 py-3">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <div className="font-display text-3xl leading-none tracking-wide text-[#e7e1d6]">Sand pad</div>
-            <div className="mt-1 text-[11px] font-mono uppercase tracking-[0.22em] text-[#8b938c]">Live inventory</div>
+    <div className="min-h-screen bg-[#090c10] text-[#e7e1d6] font-sans selection:bg-[#d7c4a3]/30 selection:text-[#f3efe4]">
+      <header className="border-b border-[#222832] bg-[#0d1016]/95 backdrop-blur-md px-4 sm:px-6 py-3 sticky top-0 z-40">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          {/* Brand & Pad Live Status */}
+          <div className="flex items-center gap-4">
+            <div>
+              <div className="flex items-center gap-2.5">
+                <span className="font-display text-2xl sm:text-3xl font-bold tracking-wider text-[#e7e1d6]">
+                  PAD CONSOLE
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  LIVE
+                </span>
+              </div>
+              <div className="text-[11px] font-mono text-[#8c96a3] mt-0.5 flex items-center gap-2">
+                <span>{padSummary.nextWellName}</span>
+                <span className="text-[#454f5c]">·</span>
+                <span className="text-[#d7c4a3] font-semibold">STAGE #{padSummary.nextStageNumber}</span>
+                <span className="text-[#454f5c]">·</span>
+                <span>{Math.round(padSummary.totalPadOnHandLbs / 1000).toLocaleString()}k LBS ON PAD</span>
+              </div>
+            </div>
           </div>
-          <select
-            value={currentPadId || ''}
-            onChange={(e) => setCurrentPadId(e.target.value)}
-            className="bg-[#0e1013] border border-[#2c3138] text-[#e7e1d6] px-3 py-2 text-sm"
-          >
-            {effectivePadList.map((p) => (
-              <option key={p.id} value={p.id}>{p.name}</option>
-            ))}
-          </select>
+
+          {/* Pad Selection Dropdown & Actions */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 bg-[#12161f] border border-[#262e3a] rounded-lg px-2.5 py-1">
+              <span className="text-[10px] font-mono uppercase text-[#707c8b] tracking-wider">PAD:</span>
+              <select
+                value={currentPadId || ''}
+                onChange={(e) => setCurrentPadId(e.target.value)}
+                className="bg-transparent text-[#e7e1d6] text-xs font-mono font-semibold focus:outline-none cursor-pointer"
+              >
+                {effectivePadList.map((p) => (
+                  <option key={p.id} value={p.id} className="bg-[#0e1218] text-[#e7e1d6]">
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
-        <nav className="mt-3 flex gap-2 overflow-x-auto">
+
+        {/* Executive Segmented Navigation Bar */}
+        <nav className="mt-3 flex items-center gap-1.5 overflow-x-auto pb-1 border-t border-[#1d232c] pt-2.5 text-xs font-mono">
           {primaryTabs.map((tab) => {
+            const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
               <button
@@ -852,9 +883,37 @@ export default function App() {
                   if (tab.id === 'delivery') setDeliveryInitialSilo(undefined);
                   setActiveTab(tab.id);
                 }}
-                className={`px-3 py-1 text-xs font-mono uppercase tracking-widest border ${isActive ? 'border-[#d7c4a3] text-[#e7e1d6]' : 'border-[#2c3138] text-[#8b938c]'}`}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg transition-all duration-150 uppercase tracking-wider whitespace-nowrap cursor-pointer ${
+                  isActive
+                    ? 'bg-[#d7c4a3] text-[#0c0f14] font-bold shadow-md shadow-[#d7c4a3]/20'
+                    : 'text-[#8c96a3] hover:text-[#e7e1d6] hover:bg-[#161b24]'
+                }`}
               >
-                {tab.label}
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'stroke-[2.5]' : ''}`} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+
+          <div className="h-4 w-[1px] bg-[#222832] mx-1 shrink-0" />
+
+          {/* Secondary tabs */}
+          {moreTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all duration-150 uppercase tracking-wider whitespace-nowrap text-[11px] cursor-pointer ${
+                  isActive
+                    ? 'bg-[#1a212b] text-[#d7c4a3] font-bold border border-[#354152] shadow-sm'
+                    : 'text-[#8c96a3] hover:text-[#e7e1d6] hover:bg-[#161b24]'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{tab.label}</span>
               </button>
             );
           })}
