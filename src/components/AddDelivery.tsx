@@ -34,6 +34,7 @@ import ScanConfirmationModal from './ScanConfirmationModal';
 interface AddDeliveryProps {
   state: AppState;
   initialSiloNumber?: number;
+  onSelectSilo?: (siloNumber: number) => void;
   onAddDelivery: (delivery: {
     ticketNumber: string;
     siloNumber: number;
@@ -66,6 +67,7 @@ interface AddDeliveryProps {
 export default function AddDelivery({
   state,
   initialSiloNumber,
+  onSelectSilo,
   onAddDelivery,
   onDeleteDelivery,
   onSaveProductCodeMapping,
@@ -90,6 +92,16 @@ export default function AddDelivery({
     initialSiloObj?.sandType || state.config.sandTypes[0]?.name || '100 Mesh'
   );
   const [lbs, setLbs] = useState<string>('');
+
+  useEffect(() => {
+    if (initialSiloNumber !== undefined && initialSiloNumber !== siloNumber) {
+      setSiloNumber(initialSiloNumber);
+      const siloObj = state.config.silos.find((s) => s.siloNumber === initialSiloNumber);
+      if (siloObj && siloObj.sandType) {
+        setSandType(siloObj.sandType);
+      }
+    }
+  }, [initialSiloNumber]);
 
   // Supplier logic based on state.config.suppliers
   const supplierList = state.config.suppliers || [];
@@ -334,6 +346,7 @@ export default function AddDelivery({
     if (siloObj && siloObj.sandType) {
       setSandType(siloObj.sandType);
     }
+    onSelectSilo?.(num);
   };
 
   const handlePhotoUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -543,7 +556,7 @@ export default function AddDelivery({
   const lastSavedTicket = sessionTickets[0] || recentPadDeliveries[0];
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 pb-20">
+    <div className="w-full space-y-6 pb-20">
       {/* FLASH SUCCESS / UNDO MESSAGES (Shared across Mobile and Desktop) */}
       {justSavedFlash && (
         <div className="bg-[#142319] text-[#8fa37a] p-4 sm:p-5 rounded-2xl font-semibold text-sm sm:text-base text-center shadow-xl border border-[#8fa37a]/40 animate-in fade-in slide-in-from-top-2 flex items-center justify-center gap-3">

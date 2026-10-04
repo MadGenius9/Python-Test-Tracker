@@ -34,7 +34,8 @@ import StageReview from './components/StageReview';
 import { Reconciliation } from './components/Reconciliation';
 import QuickEntry from './components/QuickEntry';
 import { onFirebaseError, waitForFirebaseAuth, resetAuthReadyPromise } from './lib/firebase';
-import { getNextWellAndStage, isStageComplete } from './lib/sandRules';
+import { getNextWellAndStage, isStageComplete, getSiloDerivedStates } from './lib/sandRules';
+import HopperField from './components/HopperField';
 import {
   addDeliveryTicket,
   addRunRecords,
@@ -913,6 +914,45 @@ export default function App() {
             }}
             onSelectPad={(padId) => setCurrentPadId(padId)}
           />
+        ) : activeTab === 'delivery' ? (
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_520px] 2xl:grid-cols-[minmax(0,1fr)_580px] gap-4 items-start">
+            <div className="min-w-0">
+              <HopperField
+                sides={(() => {
+                  const derived = getSiloDerivedStates(state);
+                  const sideNames = Array.from(new Set(derived.map((s) => (s.side || 'A').trim())));
+                  return sideNames.map((sideName) => ({
+                    sideName,
+                    silos: derived.filter((s) => (s.side || 'A').trim() === sideName),
+                  }));
+                })()}
+                selectedSilo={deliveryInitialSilo ?? (state.config.silos[0]?.siloNumber || 1)}
+                onSelect={(siloNum) => {
+                  setDeliveryInitialSilo(siloNum);
+                }}
+              />
+            </div>
+            <div className="min-w-0">
+              <AddDelivery
+                state={state}
+                initialSiloNumber={deliveryInitialSilo}
+                onSelectSilo={(siloNum) => {
+                  setDeliveryInitialSilo(siloNum);
+                }}
+                onAddDelivery={handleAddDelivery}
+                onDeleteDelivery={handleDeleteDelivery}
+                onSaveProductCodeMapping={handleSaveProductCodeMapping}
+                onChangeSiloSand={handleChangeSiloSand}
+                onNavigateToSetup={() => setActiveTab('setup')}
+                onNavigateToLogs={() => {
+                  setActiveTab('logs');
+                  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                }}
+                onDone={() => setActiveTab('board')}
+                onCancel={() => setActiveTab('board')}
+              />
+            </div>
+          </div>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(280px,420px)_minmax(0,1fr)] gap-4 items-start">
             <PadSchematic
@@ -973,24 +1013,6 @@ export default function App() {
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             }}
             onSuccessMessage={showToast}
-          />
-        )}
-
-        {activeTab === 'delivery' && (
-          <AddDelivery
-            state={state}
-            initialSiloNumber={deliveryInitialSilo}
-            onAddDelivery={handleAddDelivery}
-            onDeleteDelivery={handleDeleteDelivery}
-            onSaveProductCodeMapping={handleSaveProductCodeMapping}
-            onChangeSiloSand={handleChangeSiloSand}
-            onNavigateToSetup={() => setActiveTab('setup')}
-            onNavigateToLogs={() => {
-              setActiveTab('logs');
-              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-            }}
-            onDone={() => setActiveTab('board')}
-            onCancel={() => setActiveTab('board')}
           />
         )}
 
