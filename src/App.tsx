@@ -827,8 +827,8 @@ export default function App() {
     <div className="min-h-screen bg-[#07080a] text-[#e8ebe6] font-sans flex">
       <aside className="hidden md:flex w-52 shrink-0 flex-col border-r border-[#2a313b] bg-[#0c0e12] px-3 py-4">
         <div className="px-2">
-          <div className="font-display text-2xl tracking-wide text-[#e8ebe6]">PYTHON</div>
-          <div className="text-[11px] font-mono uppercase tracking-widest text-[#d4a017]">Sand tracker</div>
+          <div className="font-display text-3xl tracking-wide text-[#f0d48a]">PAD</div>
+          <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#e25a4a]">Console</div>
         </div>
         <div className="mt-6 text-[10px] font-mono uppercase tracking-widest text-[#9aa3ad] px-2">Pad</div>
         <select
