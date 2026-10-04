@@ -272,6 +272,11 @@ export default function SiloBoard({
             onSelect={setSelectedSiloNumber}
           />
         </div>
+        {(() => {
+          const selected = siloStates.find((s) => s.siloNumber === (selectedSiloNumber ?? siloStates[0]?.siloNumber));
+          if (!selected) return <aside className="text-sm text-[#9aa3ad]">No silos.</aside>;
+          const fill = Math.max(0, Math.min(100, selected.percentFull || 0));
+          return (
             <aside className="bg-[#101318] border border-[#2a313b] rounded-xl p-4 sm:p-5 shadow-lg space-y-4 xl:sticky xl:top-24">
               <div className="flex items-start justify-between gap-3">
                 <div>
