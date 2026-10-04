@@ -41,12 +41,22 @@ html, body {
 }
 
 body {
-  background-image: 
-    radial-gradient(ellipse 70% 35% at 50% 0%, rgba(194, 59, 50, 0.07), transparent 75%),
-    radial-gradient(ellipse 50% 30% at 85% 100%, rgba(143, 163, 122, 0.04), transparent 60%);
-  background-attachment: fixed;
-  -webkit-font-smoothing: antialiased;
+  background-color: #07080a;
+  background-image: none;
 }
+
+#root main .rounded-2xl,
+#root main .rounded-3xl,
+#root main .rounded-xl {
+  border-radius: 8px;
+}
+
+#root main .shadow-lg,
+#root main .shadow-xl,
+#root main .shadow-2xl {
+  box-shadow: none;
+}
+
 
 .font-display {
   font-family: 'Rajdhani', 'IBM Plex Sans', sans-serif;

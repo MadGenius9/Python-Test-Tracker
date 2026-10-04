@@ -953,6 +953,31 @@ export default function App() {
               />
             </div>
           </div>
+        ) : activeTab === 'pullsheet' ? (
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_520px] gap-4 items-start">
+            <HopperField
+              sides={(() => {
+                const derived = getSiloDerivedStates(state);
+                const sideNames = Array.from(new Set(derived.map((s) => (s.side || 'A').trim())));
+                return sideNames.map((sideName) => ({
+                  sideName,
+                  silos: derived.filter((s) => (s.side || 'A').trim() === sideName),
+                }));
+              })()}
+              selectedSilo={deliveryInitialSilo ?? (state.config.silos[0]?.siloNumber || 1)}
+              onSelect={(siloNum) => setDeliveryInitialSilo(siloNum)}
+            />
+            <StagePullSheet
+              state={state}
+              targetWellId={pullSheetTarget?.wellId}
+              targetStageNumber={pullSheetTarget?.stageNumber}
+              onSuccessMessage={showToast}
+              resetSignal={pullSheetResetSignal}
+              lastRanWellId={lastRanWellId}
+              onRecordRun={handleRecordRun}
+              onClearAllSiloPriorities={handleClearAllSiloPriorities}
+            />
+          </div>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(280px,420px)_minmax(0,1fr)] gap-4 items-start">
             <PadSchematic
@@ -964,19 +989,6 @@ export default function App() {
               }}
             />
             <div className="min-w-0">
-        {activeTab === 'pullsheet' && (
-          <StagePullSheet
-            state={state}
-            targetWellId={pullSheetTarget?.wellId}
-            targetStageNumber={pullSheetTarget?.stageNumber}
-            onSuccessMessage={showToast}
-            resetSignal={pullSheetResetSignal}
-            lastRanWellId={lastRanWellId}
-            onRecordRun={handleRecordRun}
-            onClearAllSiloPriorities={handleClearAllSiloPriorities}
-          />
-        )}
-
         {activeTab === 'job_design' && <JobDesign state={state} />}
 
         {activeTab === 'progress' && <StageProgress state={state} />}
