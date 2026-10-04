@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "pads": {
+      "title": "Pads",
+      "description": "Well pad configurations and state",
+      "type": "object",
+      "properties": {
+        "padName": { "type": "string" },
+        "siloCount": { "type": "number" },
+        "lbsPerTruckload": { "type": "number" },
+        "lbsPerTon": { "type": "number" },
+        "drawStrategy": { "type": "string" },
+        "reorderThresholdStages": { "type": "number" },
+        "activeWellId": { "type": "string" },
+        "nextStageNumber": { "type": "number" },
+        "wells": { "type": "array" },
+        "sandTypes": { "type": "array" },
+        "silos": { "type": "array" }
+      },
+      "required": ["padName", "siloCount"]
+    },
+    "deliveries": {
+      "title": "Deliveries",
+      "description": "Delivery tickets logged for a pad",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "timeOfDay": { "type": "string" },
+        "sandType": { "type": "string" },
+        "supplier": { "type": "string" },
+        "driverName": { "type": "string" },
+        "notes": { "type": "string" },
+        "siloNumber": { "type": "number" },
+        "ticketNumber": { "type": "string" },
+        "lbs": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "photoUrl": { "type": "string" }
+      },
+      "required": ["ticketNumber", "siloNumber", "lbs"]
+    },
+    "ticketNumbers": {
+      "title": "TicketNumbers",
+      "description": "Pad-scoped uniqueness index for delivery ticket numbers",
+      "type": "object",
+      "properties": {
+        "deliveryId": { "type": "string" },
+        "ticketNumber": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "deleted": { "type": "boolean" },
+        "overridden": { "type": "boolean" },
+        "overrideReason": { "type": "string" }
+      },
+      "required": ["deliveryId", "ticketNumber"]
+    },
+    "runs": {
+      "title": "Runs",
+      "description": "Stage run records for a pad",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "wellId": { "type": "string" },
+        "stageNumber": { "type": "number" },
+        "siloNumber": { "type": "number" },
+        "sandType": { "type": "string" },
+        "lbsPulled": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["wellId", "stageNumber", "siloNumber", "lbsPulled"]
+    }
+  },
+  "firestore": {
+    "/pads/{padId}": {
+      "schema": "#/entities/pads",
+      "description": "Pad master configuration document"
+    },
+    "/pads/{padId}/deliveries/{deliveryId}": {
+      "schema": "#/entities/deliveries",
+      "description": "Delivery tickets collection"
+    },
+    "/pads/{padId}/ticketNumbers/{normTicket}": {
+      "schema": "#/entities/ticketNumbers",
+      "description": "Ticket uniqueness index"
+    },
+    "/pads/{padId}/runs/{runId}": {
+      "schema": "#/entities/runs",
+      "description": "Run records collection"
+    }
+  }
+}

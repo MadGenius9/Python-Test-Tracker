@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny for unspecified paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Pads collection and all nested subcollections
+    match /pads/{padId} {
+      allow read, write: if true;
+
+      match /{allChildren=**} {
+        allow read, write: if true;
+      }
+    }
+
+    // Soft-deleted pads archive
+    match /deletedPads/{padId} {
+      allow read, write: if true;
+
+      match /{allChildren=**} {
+        allow read, write: if true;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-display: 'Rajdhani', 'IBM Plex Sans', sans-serif;
+
+  --color-void: #0b0c0e;
+  --color-panel: #14171c;
+  --color-panel-bright: #1b2027;
+  --color-line: #2a313b;
+  --color-bone: #e8ebe6;
+  --color-mist: #9aa3ad;
+  --color-crimson: #c23b32;
+  --color-crimson-bright: #e25a4a;
+  --color-crimson-dark: #260e0c;
+  --color-sage: #8fa37a;
+  --color-sage-dark: #172114;
+  --color-sodium: #d4a017;
+  --color-sodium-dark: #291e04;
+}
+
+:root {
+  --app-void: #0b0c0e;
+  --app-panel: #14171c;
+  --app-panel-bright: #1b2027;
+  --app-line: #2a313b;
+  --app-bone: #e8ebe6;
+  --app-mist: #9aa3ad;
+  --app-crimson: #c23b32;
+  --app-crimson-bright: #e25a4a;
+  --app-sage: #8fa37a;
+  --app-sodium: #d4a017;
+}
+
+html, body {
+  background-color: #0b0c0e;
+  color: #e8ebe6;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+}
+
+body {
+  background-image: 
+    radial-gradient(ellipse 70% 35% at 50% 0%, rgba(194, 59, 50, 0.07), transparent 75%),
+    radial-gradient(ellipse 50% 30% at 85% 100%, rgba(143, 163, 122, 0.04), transparent 60%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: 'Rajdhani', 'IBM Plex Sans', sans-serif;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@layer base {
+  @media print {
+    @page {
+      size: letter landscape;
+      margin: 0.3in;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-shadow: none !important;
+      text-shadow: none !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    html,
+    body,
+    #root,
+    main {
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      width: 100% !important;
+      max-width: 10.4in !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+      font-variant-numeric: tabular-nums;
+      height: auto !important;
+      min-height: 0 !important;
+    }
+
+    .stage-pull-sheet {
+      width: 100% !important;
+      max-width: 10.4in !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+
+    .no-print,
+    .screen-only,
+    header,
+    nav,
+    aside,
+    button:not(.print-allow),
+    input:not(.print-allow),
+    select:not(.print-allow) {
+      display: none !important;
+    }
+
+    .print-only {
+      display: block !important;
+    }
+
+    .page-break-inside-avoid,
+    table,
+    tr,
+    .summary-strip {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+  }
+}
+

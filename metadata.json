@@ -1,0 +1,10 @@
+{
+  "name": "Remix Sand Tracker",
+  "description": "Real-time frac sand tracking web app for well pad crews, featuring silo boards, delivery tickets, and stage run allocations.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "config": {
+    "padName": "",
+    "siloCount": 6,
+    "lbsPerTruckload": 57000,
+    "lbsPerTon": 2000,
+    "drawStrategy": "emptiest_first",
+    "allowedUsers": [],
+    "wells": [],
+    "sandTypes": [],
+    "silos": []
+  },
+  "deliveries": [],
+  "runs": []
+}
