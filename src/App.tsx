@@ -824,25 +824,25 @@ export default function App() {
 
   // 7. MAIN APPLICATION UI
   return (
-    <div className="min-h-screen bg-[#07080a] text-[#e8ebe6] font-sans flex">
-      <aside className="hidden md:flex w-52 shrink-0 flex-col border-r border-[#2a313b] bg-[#0c0e12] px-3 py-4">
-        <div className="px-2">
-          <div className="font-display text-3xl tracking-wide text-[#f0d48a]">PAD</div>
-          <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#e25a4a]">Console</div>
+    <div className="min-h-screen bg-black text-[#f3efe4] font-sans">
+      <header className="border-b border-[#d4a017] bg-black px-4 py-3">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <div className="font-display text-4xl leading-none tracking-wide text-[#f0d48a]">PAD CONSOLE</div>
+            <div className="mt-1 text-[11px] font-mono uppercase tracking-[0.3em] text-[#e25a4a]">Not the old tracker</div>
+          </div>
+          <select
+            value={currentPadId || ''}
+            onChange={(e) => setCurrentPadId(e.target.value)}
+            className="bg-black border border-[#d4a017] text-[#f0d48a] px-3 py-2 text-sm"
+          >
+            {effectivePadList.map((p) => (
+              <option key={p.id} value={p.id}>{p.name}</option>
+            ))}
+          </select>
         </div>
-        <div className="mt-6 text-[10px] font-mono uppercase tracking-widest text-[#9aa3ad] px-2">Pad</div>
-        <select
-          value={currentPadId || ''}
-          onChange={(e) => setCurrentPadId(e.target.value)}
-          className="mt-1 w-full bg-[#14171c] border border-[#2a313b] text-[#e8ebe6] rounded px-2 py-1.5 text-xs"
-        >
-          {effectivePadList.map((p) => (
-            <option key={p.id} value={p.id}>{p.name}</option>
-          ))}
-        </select>
-        <nav className="mt-6 flex flex-col gap-1">
+        <nav className="mt-3 flex gap-2 overflow-x-auto">
           {primaryTabs.map((tab) => {
-            const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
               <button
@@ -852,17 +852,15 @@ export default function App() {
                   if (tab.id === 'delivery') setDeliveryInitialSilo(undefined);
                   setActiveTab(tab.id);
                 }}
-                className={`flex items-center gap-2 rounded px-2 py-2 text-left text-sm ${isActive ? 'bg-[#c23b32] text-white' : 'text-[#9aa3ad] hover:bg-[#14171c] hover:text-[#e8ebe6]'}`}
+                className={`px-3 py-1 text-xs font-mono uppercase tracking-widest border ${isActive ? 'border-[#e25a4a] text-[#e25a4a]' : 'border-[#3a2a16] text-[#f0d48a]'}`}
               >
-                <Icon className="w-4 h-4" />
                 {tab.label}
               </button>
             );
           })}
         </nav>
-        <div className="mt-auto pt-4 text-[10px] font-mono uppercase tracking-widest text-[#8fa37a] px-2">Live sync</div>
-      </aside>
-      <div className="min-w-0 flex-1">
+      </header>
+      <div>
       {firebaseError && (
         <div className="bg-[#260e0c] text-[#e25a4a] font-medium px-4 py-2.5 text-center border-b border-[#c23b32] shadow-lg flex items-center justify-center gap-2.5 text-xs sm:text-sm z-50 relative">
           <AlertTriangle className="w-4 h-4 shrink-0 text-[#e25a4a]" />
@@ -879,7 +877,7 @@ export default function App() {
       )}
 
       {/* Main View Container */}
-      <main className="max-w-[1400px] mx-auto px-2 sm:px-5 py-4">
+      <main className="px-3 py-4">
         {activeTab === 'board' ? (
           <SiloBoard
             state={state}
